@@ -5,38 +5,99 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Orientation + Motion Demo</title>
 <style>
-    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.8; }
-    button { padding: 10px 18px; font-size: 1.2rem; }
-    h3 { margin-top: 30px; }
-    .val { font-size: 1.1rem; }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fa;
+        color: #333;
+        line-height: 1.8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+    .container {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        max-width: 600px;
+        width: 100%;
+    }
+    h2 {
+        font-size: 1.8rem;
+        color: #4CAF50;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    h3 {
+        font-size: 1.4rem;
+        color: #555;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    p.val {
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 8px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1.2rem;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+    .val span {
+        font-weight: bold;
+        color: #333;
+    }
 </style>
 </head>
 <body>
 
-<h2>DeviceOrientation + DeviceMotion 整合示範</h2>
-<p>請按下按鈕授權後，旋轉手機與搖一搖。</p>
+<div class="container">
+    <h2>DeviceOrientation + DeviceMotion 整合示範</h2>
+    <p>請按下按鈕授權後，旋轉手機與搖一搖。</p>
 
-<button id="btn">取得感測器授權並開始</button>
+    <button id="btn">取得感測器授權並開始</button>
 
-<h3>DeviceOrientation (方向角度)</h3>
-<p class="val">Alpha (Z)：<span id="alpha">-</span></p>
-<p class="val">Beta (X)：<span id="beta">-</span></p>
-<p class="val">Gamma (Y)：<span id="gamma">-</span></p>
+    <h3>DeviceOrientation (方向角度)</h3>
+    <p class="val">Alpha (Z)：<span id="alpha">-</span></p>
+    <p class="val">Beta (X)：<span id="beta">-</span></p>
+    <p class="val">Gamma (Y)：<span id="gamma">-</span></p>
 
-<h3>DeviceMotion (加速度)</h3>
-<p class="val">ax：<span id="ax">-</span></p>
-<p class="val">ay：<span id="ay">-</span></p>
-<p class="val">az：<span id="az">-</span></p>
+    <h3>DeviceMotion (加速度)</h3>
+    <p class="val">ax：<span id="ax">-</span></p>
+    <p class="val">ay：<span id="ay">-</span></p>
+    <p class="val">az：<span id="az">-</span></p>
 
-<h3>DeviceMotion (含重力)</h3>
-<p class="val">ax_g：<span id="ax_g">-</span></p>
-<p class="val">ay_g：<span id="ay_g">-</span></p>
-<p class="val">az_g：<span id="az_g">-</span></p>
+    <h3>DeviceMotion (含重力)</h3>
+    <p class="val">ax_g：<span id="ax_g">-</span></p>
+    <p class="val">ay_g：<span id="ay_g">-</span></p>
+    <p class="val">az_g：<span id="az_g">-</span></p>
 
-<h3>Gyroscope 旋轉速率</h3>
-<p class="val">α(速度)：<span id="rAlpha">-</span></p>
-<p class="val">β(速度)：<span id="rBeta">-</span></p>
-<p class="val">γ(速度)：<span id="rGamma">-</span></p>
+    <h3>Gyroscope 旋轉速率</h3>
+    <p class="val">α(速度)：<span id="rAlpha">-</span></p>
+    <p class="val">β(速度)：<span id="rBeta">-</span></p>
+    <p class="val">γ(速度)：<span id="rGamma">-</span></p>
+</div>
 
 <script>
 const btn = document.getElementById("btn");
