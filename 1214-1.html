@@ -1,51 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-  <title>Fetch</title>
+  <meta charset="UTF-8">
+  <title>Fetch Demo</title>
+
   <style>
-    .sensor-data { margin: 20px; padding: 15px; border: 1px solid #ccc; }
-    .axis { margin: 10px 0; }
-    .value { font-weight: bold; color: #007bff; }
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .json-output {
+      margin: 20px;
+    }
+
+    form input,
+    form button {
+      display: block;
+      margin: 10px 0;
+      padding: 6px;
+    }
+
+    button {
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
   <h1>Fetch Demo</h1>
 
   <div class="json-output">
     <h3>JSON 資料格式</h3>
+
     <form id="formElem">
       <input type="text" name="name" value="Melody">
       <input type="text" name="surname" value="Mathilde">
       <input type="text" name="age" value="15">
-      <input type="submit">
+
+      <!-- 改成 button -->
+      <button type="submit">送出</button>
     </form>
+
     <pre id="jsonOutput"></pre>
   </div>
 
-<script>
-  const formElem = document.getElementById('formElem');
-  const jsonOutput = document.getElementById('jsonOutput');
+  <script>
+    const formElem = document.getElementById('formElem');
+    const jsonOutput = document.getElementById('jsonOutput');
 
-  formElem.onsubmit = async (e) => {
-    e.preventDefault();
+    formElem.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    // 將表單資料轉成 query string
-    const formData = new FormData(formElem);
-    const params = new URLSearchParams(formData);
+      // 表單資料 → query string
+      const formData = new FormData(formElem);
+      const params = new URLSearchParams(formData);
 
-    // GET 請求（資料放在 URL）
-    const response = await fetch(
-      `https://httpbin.org/get?${params.toString()}`,
-      {
-        method: 'GET'
-      }
-    );
+      const response = await fetch(
+        `https://httpbin.org/get?${params.toString()}`,
+        { method: 'GET' }
+      );
 
-    const result = await response.json();
-    console.log(result);
-    jsonOutput.textContent = JSON.stringify(result, null, 2);
-  };
-</script>
+      const result = await response.json();
 
+      console.log(result);
+      jsonOutput.textContent = JSON.stringify(result, null, 2);
+    });
+  </script>
 </body>
 </html>
