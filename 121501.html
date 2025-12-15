@@ -20,27 +20,31 @@
         </form>
         <pre id-"jsonOutput"></pre>
     </div>
-    <script>
-        async function f_test(){
-              formElem.onsubmit = async (e) => {
-                e.preventDefault();
+   <script>
+async function f_test() {
+    formElem.onsubmit = async (e) => {
+        e.preventDefault();
 
-                for(let [name, valuel] of formElem) {
-                    alert(`${name} = ${valuet}`); // key1 = valuel, then key2 = value2
-                }
+        let formData = new FormData(formElem);
+        let params = new URLSearchParams(formData);
 
-                let response = await fetch('https://httpcan.org/post', {
-                    method: 'POST',
-                    body: new FormData(formElem)
-                });
+        let url = 'https://httpbin.org/get?' + params.toString();
 
-                let result = await response.json():  
+        let response = await fetch(url, {
+            method: 'GET'
+        });
 
-                console.log(result);
-              }:
-        }
-        f_test()
-    </script>
+        let result = await response.json();
+        console.log(result);
+
+        document.getElementById("jsonOutput").textContent =
+            JSON.stringify(result, null, 2);
+    }
+}
+
+f_test();
+</script>
+
 </body>
 </html>
 
