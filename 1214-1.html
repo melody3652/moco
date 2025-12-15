@@ -30,7 +30,7 @@
             let formData = new FormData(formElem);
             let params = new URLSearchParams(formData);
 
-            let url = 'https://httpbin.org/get?' + params.toString();
+            let url = 'https://httpcan.org/get?' + params.toString();
 
             let response = await fetch(url, {
                 method: 'GET'
