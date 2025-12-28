@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>跌倒偵測系統</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #d32f2f;
+      font-size: 32px;
+    }
+
+    button {
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      font-size: 26px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    #okBtn {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    #helpBtn {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    #status {
+      font-size: 22px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>⚠️ 偵測到跌倒！</h1>
+
+  <button id="okBtn">我沒事</button>
+  <button id="helpBtn">幫我叫救護車</button>
+
+  <div id="status">系統監測中...</div>
+
+  <!-- 警示音 -->
+  <audio id="alarm" loop>
+    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+  </audio>
+
+  <script>
+    let fallDetected = false;
+    const THRESHOLD = 25; // 跌倒判斷門檻（可調）
+
+    const statusText = document.getElementById("status");
+    const alarm = document.getElementById("alarm");
+
+    // 跌倒偵測
+    window.addEventListener("devicemotion", function (event) {
+      if (fallDetected) return;
+
+      const acc = event.accelerationIncludingGravity;
+      if (!acc) return;
+
+      const totalAcceleration =
+        Math.sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
+
+      if (totalAcceleration > THRESHOLD) {
+        fallDetected = true;
+        statusText.innerText = "⚠️ 可能發生跌倒！";
+        alarm.play();
+      }
+    });
+
+    // 我沒事
+    document.getElementById("okBtn").onclick = function () {
+      fallDetected = false;
+      alarm.pause();
+      alarm.currentTime = 0;
+      statusText.innerText = "已解除警示，系統重新監測中";
+    };
+
+    // 撥打 119
+    document.getElementById("helpBtn").onclick = function () {
+      window.location.href = "tel:119";
+    };
+  </script>
+
+</body>
+</html>
